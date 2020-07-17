@@ -13,8 +13,10 @@ spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	$username = "test123444444?";
+	$password = "123456?";
 	echo "<pre>";
-	print_r(Validation::getValidation("12345678"));
+	print_r(Validation::getValidation($username, $password));
 	echo "</pre>";
 	//$getValidation = Validation::checkValidation($username, $password);
 }
