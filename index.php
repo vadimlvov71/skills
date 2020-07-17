@@ -3,36 +3,46 @@
 //use \Auth;
 require ("config.php");
 ?>
-<!DOCTYPE html>
-<html>
-	<head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="<?php echo($path)?>/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="<?php echo($path)?>/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="<?php echo($path)?>/js/bootstrap.min.js"></script>
-</head>
+<?php require ("includes/head.php");?>
 <body>
 <?php require ("includes/header.php");?>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h3 class="text-center">check password</h3>
-    </div>
-  </div>
-</div>
+
 
 <?php
 spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	echo "<pre>";
+	print_r(Validation::getValidation("12345678"));
+	echo "</pre>";
+	//$getValidation = Validation::checkValidation($username, $password);
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	echo "<pre>";
+	print_r($_POST);
+	echo "</pre>";
+}else{
+	?>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h3 class="text-center">check password</h3>
+   
+				<form method="post">
+					 <input type="text" placeholder="Username" maxlength="15" name="username"/><br>
+						<input type="password" maxlength="15" name="password"/><br>
+					<input type="submit" name="treasure" value="go!">
+				</form>
+			 </div>
+		</div>
+	</div>
+<?php
+}
 $input =  "12345678";
 $input2 =  "12345678";
-$getPassword = Auth::getPassword($input);
-echo "getPassword:::".$getPassword."<br>";
+//$getPassword = Auth::getPassword($input);
+//echo "getPassword:::".$getPassword."<br>";
 if (password_verify($input2, $getPassword)) {
     echo 'Пароль правильный!<br>';
 } else {
