@@ -2,6 +2,8 @@
 //include 'Auth.php';
 //use \Auth;
 require ("config.php");
+///
+$isErrorsExist = false;
 ?>
 <?php require ("includes/head.php");?>
 <body>
@@ -13,22 +15,40 @@ spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$username = "test123444444?";
-	$password = "123456?";
+	//$username = "test1234444444";
+	//$password = "123456^";
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+	$validationResult = Validation::getValidation($username, $password);
+	$errorsCount = count($validationResult);
+	if($errorsCount !== 0){
+		$isErrorsExist = true;
+		echo "invalid";
+	}else{
+		echo "valid";
+	}
 	echo "<pre>";
 	print_r(Validation::getValidation($username, $password));
 	echo "</pre>";
 	//$getValidation = Validation::checkValidation($username, $password);
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $isErrorsExist == false){
 	echo "<pre>";
 	print_r($_POST);
 	echo "</pre>";
 }else{
+	
 	?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
+				<?php
+				if($isErrorsExist == true){
+					foreach($validationResult as $error){
+						echo "<div class='alert alert-danger'>".$error."</div>";
+					}
+				}
+				?>
 				<h3 class="text-center">check password</h3>
    
 				<form method="post">
@@ -41,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</div>
 <?php
 }
+/*
 $input =  "12345678";
 $input2 =  "12345678";
 //$getPassword = Auth::getPassword($input);

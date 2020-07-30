@@ -1,6 +1,6 @@
 <?php
 class Validation{
-private static $minUsernameLength = 6;
+    private static $minUsernameLength = 6;
 	private static $maxUsernameLength = 12;
 	private static $minPasswordLength = 8;
 	private static $maxPasswordLength = 12;
